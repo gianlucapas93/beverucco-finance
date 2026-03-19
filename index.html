@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Report Patrimoniale — 13 Mar 2026</title>
+<title>Report Patrimoniale — Aggiornato 19 Mar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -13,6 +13,7 @@
   --gold:#8c621e; --gold-lt:#b07e2a; --green:#1a6e47; --red:#b83030;
   --text:#171410; --muted:#706860; --dim:#b8b0a4;
   --blue:#2d6ea8; --purple:#6b4daa; --orange:#a84e1e;
+  --amber:#c47a00;
   --r:12px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,11 +21,10 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px 80px}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .a1{animation:fadeUp .5s ease both}.a2{animation:fadeUp .5s .08s ease both}
 .a3{animation:fadeUp .5s .15s ease both}.a4{animation:fadeUp .5s .22s ease both}.a5{animation:fadeUp .5s .3s ease both}
 
-/* ── HEADER ── */
+/* HEADER */
 header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;flex-direction:column;gap:20px}
 .h-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,6vw,2.8rem);line-height:1.08;letter-spacing:-.5px}
 .h-title em{color:var(--gold);font-style:italic}
@@ -33,35 +33,26 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .pv{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3rem);color:var(--gold);letter-spacing:-1px;line-height:1;margin-top:3px;transition:all .3s ease}
 .pm{font-size:11px;color:var(--muted);margin-top:6px;font-family:'IBM Plex Mono',monospace}
 
-/* ── FILTER BAR ── */
+/* PRICE UPDATE BADGE */
+.price-badge{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:14px}
+.price-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 0 3px rgba(26,110,71,.15)}
+.price-badge .warn{background:var(--amber)}
+
+/* FILTER BAR */
 .filter-bar{display:flex;gap:8px;padding:20px 0 0;align-items:center;flex-wrap:wrap}
 .filter-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-right:4px;flex-shrink:0}
-.filter-btn{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;
-  letter-spacing:1px;
-  padding:8px 18px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--muted);
-  cursor:pointer;
-  transition:all .2s ease;
-  display:flex;align-items:center;gap:7px;
-  -webkit-tap-highlight-color:transparent;
-}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:1px;padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .2s ease;display:flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent}
 .filter-btn:hover{border-color:var(--gold);color:var(--text)}
 .filter-btn.active{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:500}
 .filter-btn.active.blue{background:var(--blue);border-color:var(--blue)}
-.filter-btn.active.purple{background:var(--purple);border-color:var(--purple)}
 .filter-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .filter-btn.active .filter-dot{background:rgba(255,255,255,.6)}
 
-/* ── SECTION ── */
+/* SECTION */
 .sec{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-family:'IBM Plex Mono',monospace;margin-bottom:14px;padding-top:38px;display:flex;align-items:center;gap:12px}
 .sec::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* ── KPI ── */
+/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 14px;position:relative;overflow:hidden;transition:opacity .3s}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);opacity:.4}
@@ -70,7 +61,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .kp{font-size:11px;color:var(--muted);margin-top:5px;font-family:'IBM Plex Mono',monospace}
 .kp span{color:var(--gold-lt);font-weight:600}
 
-/* ── CHARTS ── */
+/* CHARTS */
 .charts-row{display:grid;grid-template-columns:1fr;gap:12px}
 .cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px}
 .ct{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:14px}
@@ -80,7 +71,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .ld{width:8px;height:8px;border-radius:3px;flex-shrink:0}
 .lv{color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px}
 
-/* ── ALLOC ── */
+/* ALLOC */
 .alloc-row{display:flex;flex-direction:column;gap:10px}
 .ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:0 12px;align-items:center}
 .an{font-size:14px;font-weight:700;color:var(--text);grid-column:1}
@@ -92,7 +83,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .alloc-item{transition:opacity .3s,transform .3s}
 .alloc-item.hidden{display:none}
 
-/* ── PORTFOLIO BLOCK ── */
+/* PORTFOLIO BLOCK */
 .table-section{display:flex;flex-direction:column;gap:14px}
 .pb{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:opacity .3s,transform .3s}
 .pb.hidden{display:none}
@@ -108,7 +99,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .sh{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;padding:9px 16px;background:var(--s2);border-bottom:1px solid var(--border);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .sd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ── TABLE ── */
+/* TABLE */
 table{width:100%;border-collapse:collapse}
 thead th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-weight:400;padding:10px 16px;text-align:right;border-bottom:1px solid var(--border);background:var(--s2);white-space:nowrap}
 thead th:first-child{text-align:left}
@@ -124,8 +115,14 @@ tbody tr:hover td{background:#faf8f4}
 .pc{white-space:nowrap}
 .pa{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 .fn{padding:10px 16px;font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--border);background:var(--s2);line-height:1.6}
+.fn.warn{border-left:3px solid var(--amber);color:var(--amber)}
 
-/* ── MOBILE TABLE→CARD ── */
+/* PRICE INDICATOR */
+.pup{color:var(--green)}
+.pdn{color:var(--red)}
+.pnc{color:var(--amber);font-size:10px}
+
+/* MOBILE TABLE→CARD */
 @media(max-width:640px){
   thead{display:none}
   table{display:block}tbody{display:block}
@@ -136,12 +133,13 @@ tbody tr:hover td{background:#faf8f4}
   tbody td::before{content:attr(data-label);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);flex-shrink:0;margin-right:8px;text-align:left}
   tbody td:first-child::before{display:none}
   td[data-label="PMC"],td[data-label="Nominale"],td[data-label="Valore Acquisto"],td[data-label="Tipo"]{display:none}
+  .price-badge{font-size:10px}
 }
 
-/* ── FOOTER ── */
+/* FOOTER */
 footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-size:11px;color:var(--dim);font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;gap:5px;line-height:1.7}
 
-/* ── DESKTOP ── */
+/* DESKTOP */
 @media(min-width:641px){
   .wrap{padding:0 28px 96px}
   header{flex-direction:row;justify-content:space-between;align-items:flex-end;padding:52px 0 26px;gap:32px}
@@ -169,15 +167,21 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
 <body>
 <div class="wrap">
 
-<!-- HEADER -->
 <header class="a1">
   <div>
     <div class="h-title">Report <em>Patrimoniale</em><br>Famigliare</div>
-    <div class="h-sub">Aggiornato al 13 Marzo 2026 &nbsp;·&nbsp; Valuta base: EUR<br>1 USD = 0,8695 € &nbsp;·&nbsp; 1 GBP = 1,1627 €</div>
+    <div class="h-sub">Dati di riferimento: 13 Marzo 2026 &nbsp;·&nbsp; Valuta base: EUR<br>1 USD = 0,8695 € &nbsp;·&nbsp; 1 GBP = 1,1627 €</div>
+    <div class="price-badge">
+      <span class="dot"></span>
+      Prezzi azionari aggiornati al 19 Mar 2026
+      &nbsp;·&nbsp;
+      <span class="dot warn"></span>
+      LCUW · COPX · Bond: prezzo originale Mar 13
+    </div>
   </div>
   <div class="h-right">
     <div class="pl" id="pv-label">Patrimonio Netto Totale</div>
-    <div class="pv" id="pv-value">€ 212.083</div>
+    <div class="pv" id="pv-value">€ 213.900</div>
     <div class="pm">Escluso Bending Spoons</div>
   </div>
 </header>
@@ -199,10 +203,10 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
 <!-- KPI -->
 <div class="sec a2">Riepilogo Macro</div>
 <div class="kpi-grid a2">
-  <div class="kpi"><div class="kl">Asset Finanziari</div><div class="kv" id="kpi-fin">€ 67.048</div><div class="kp"><span id="kpi-fin-pct">31,6%</span> del patrimonio</div></div>
-  <div class="kpi"><div class="kl">Previdenza Totale</div><div class="kv" id="kpi-prev">€ 51.543</div><div class="kp"><span id="kpi-prev-pct">24,3%</span> del patrimonio</div></div>
-  <div class="kpi"><div class="kl">Liquidità Bancaria</div><div class="kv" id="kpi-liq">€ 27.000</div><div class="kp"><span id="kpi-liq-pct">12,7%</span> del patrimonio</div></div>
-  <div class="kpi"><div class="kl">Asset Reali Netti</div><div class="kv" id="kpi-real">€ 64.500</div><div class="kp"><span id="kpi-real-pct">30,4%</span> del patrimonio</div></div>
+  <div class="kpi"><div class="kl">Asset Finanziari</div><div class="kv" id="kpi-fin">€ 68.969</div><div class="kp"><span id="kpi-fin-pct">32,3%</span> del patrimonio</div></div>
+  <div class="kpi"><div class="kl">Previdenza Totale</div><div class="kv" id="kpi-prev">€ 51.543</div><div class="kp"><span id="kpi-prev-pct">24,1%</span> del patrimonio</div></div>
+  <div class="kpi"><div class="kl">Liquidità Bancaria</div><div class="kv" id="kpi-liq">€ 27.000</div><div class="kp"><span id="kpi-liq-pct">12,6%</span> del patrimonio</div></div>
+  <div class="kpi"><div class="kl">Asset Reali Netti</div><div class="kv" id="kpi-real">€ 64.500</div><div class="kp"><span id="kpi-real-pct">30,2%</span> del patrimonio</div></div>
 </div>
 
 <!-- CHARTS -->
@@ -217,21 +221,21 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
 <div class="alloc-row a4">
   <div class="ac alloc-item" data-owner="gianluca">
     <div class="an">Portafoglio Serio</div><div class="as">Gianluca · Directa · Amministrato</div>
-    <div class="aa">€ 36.165</div>
+    <div class="aa">€ 36.563</div>
     <div class="ab"><div class="af" id="ab1" style="background:var(--gold)"></div></div>
-    <div class="ap" id="ap1">53,9% degli asset finanziari</div>
+    <div class="ap" id="ap1">53,0% degli asset finanziari</div>
   </div>
   <div class="ac alloc-item" data-owner="benedetta">
     <div class="an">Portafoglio Benedetta</div><div class="as">Benedetta · Directa · Amministrato</div>
-    <div class="aa">€ 28.310</div>
+    <div class="aa">€ 29.381</div>
     <div class="ab"><div class="af" id="ab2" style="background:var(--blue)"></div></div>
-    <div class="ap" id="ap2">42,2% degli asset finanziari</div>
+    <div class="ap" id="ap2">42,6% degli asset finanziari</div>
   </div>
   <div class="ac alloc-item" data-owner="gianluca">
     <div class="an">Portafoglio Speculativo</div><div class="as">Gianluca · Directa + BG Saxo</div>
-    <div class="aa">€ 2.573</div>
+    <div class="aa">€ 3.024</div>
     <div class="ab"><div class="af" id="ab3" style="background:var(--purple)"></div></div>
-    <div class="ap" id="ap3">3,8% degli asset finanziari</div>
+    <div class="ap" id="ap3">4,4% degli asset finanziari</div>
   </div>
 </div>
 
@@ -239,39 +243,47 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
 <div class="sec a5">Portafogli Dettaglio</div>
 <div class="table-section a5">
 
-<!-- SERIO — Gianluca -->
+<!-- SERIO -->
 <div class="pb" data-owner="gianluca">
   <div class="ph">
     <div class="ph-left"><span class="pn" style="color:var(--gold)">Portafoglio Serio</span><span class="ptag">Directa · Amministrato · Gianluca</span></div>
-    <div class="ph-right"><span class="ptot">€ 36.165</span><span class="ppnl pos">+9,7% PMC · +€ 3.195</span></div>
+    <div class="ph-right"><span class="ptot">€ 36.563</span><span class="ppnl pos">+10,5% PMC · +€ 3.498</span></div>
   </div>
   <div class="sh"><span class="sd" style="background:var(--gold)"></span>Azioni &amp; ETF</div>
   <table>
     <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
     <tbody>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vanguard.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VG</div></div><div><span>Vanguard FTSE All-World</span><span class="ticker">VWCE</span></div></div></td>
-        <td data-label="Qtà">98</td><td data-label="PMC">134,10 €</td><td data-label="Prezzo">147,59 €</td><td data-label="Valore €">14.463,82</td>
-        <td data-label="P&L" class="pc pos">+10,1%<span class="pa pos">+€ 1.322</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vanguard.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VG</div></div><div><span>Vanguard FTSE All-World</span><span class="ticker">VWCE · Xetra ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">93</td><td data-label="PMC">133,31 €</td>
+        <td data-label="Prezzo"><span class="pdn">147,26 €</span></td>
+        <td data-label="Valore €">13.695,18</td>
+        <td data-label="P&L" class="pc pos">+10,5%<span class="pa pos">+€ 1.302</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/amundi.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">AM</div></div><div><span>Amundi MSCI World</span><span class="ticker">LCUW</span></div></div></td>
-        <td data-label="Qtà">51</td><td data-label="PMC">120,17 €</td><td data-label="Prezzo">141,42 €</td><td data-label="Valore €">7.212,42</td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/amundi.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">AM</div></div><div><span>Amundi MSCI World</span><span class="ticker">LCUW · <span class="pnc">⚠ prezzo Mar 13</span></span></div></div></td>
+        <td data-label="Qtà">51</td><td data-label="PMC">120,18 €</td>
+        <td data-label="Prezzo"><span class="pnc">141,42 €</span></td>
+        <td data-label="Valore €">7.212,42</td>
         <td data-label="P&L" class="pc pos">+17,7%<span class="pa pos">+€ 1.084</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vaneck.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VE</div></div><div><span>VanEck Uranium &amp; Nuclear</span><span class="ticker">NUKL</span></div></div></td>
-        <td data-label="Qtà">9</td><td data-label="PMC">47,28 €</td><td data-label="Prezzo">61,88 €</td><td data-label="Valore €">556,92</td>
-        <td data-label="P&L" class="pc pos">+30,9%<span class="pa pos">+€ 131</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vaneck.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VE</div></div><div><span>VanEck Uranium &amp; Nuclear</span><span class="ticker">NUKL · Xetra ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">9</td><td data-label="PMC">47,29 €</td>
+        <td data-label="Prezzo"><span class="pdn">52,07 €</span></td>
+        <td data-label="Valore €">468,63</td>
+        <td data-label="P&L" class="pc pos">+10,1%<span class="pa pos">+€ 43</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/globalxetfs.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">GX</div></div><div><span>Global X Copper Miners</span><span class="ticker">COPX</span></div></div></td>
-        <td data-label="Qtà">5</td><td data-label="PMC">43,57 €</td><td data-label="Prezzo">55,11 €</td><td data-label="Valore €">275,55</td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/globalxetfs.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">GX</div></div><div><span>Global X Copper Miners</span><span class="ticker">COPX · <span class="pnc">⚠ prezzo Mar 13</span></span></div></div></td>
+        <td data-label="Qtà">5</td><td data-label="PMC">43,57 €</td>
+        <td data-label="Prezzo"><span class="pnc">55,11 €</span></td>
+        <td data-label="Valore €">275,55</td>
         <td data-label="P&L" class="pc pos">+26,5%<span class="pa pos">+€ 58</span></td>
       </tr>
     </tbody>
   </table>
-  <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
+  <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni <span style="font-size:10px;margin-left:8px;color:var(--amber)">⚠ prezzi al 13 Mar</span></div>
   <table>
     <thead><tr><th>Titolo</th><th>Nominale</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
     <tbody>
@@ -297,42 +309,50 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
       </tr>
     </tbody>
   </table>
-  <div class="fn">* PMC VWCE ponderato su 75 quote BIT + 23 quote Xetra. Liquidità broker esclusa.</div>
+  <div class="fn warn">⚠ NUKL sceso da €61,88 → €52,07 (−15,8%) dall'ultimo aggiornamento. LCUW e COPX: prezzo da verificare sul tuo broker — ticker potrebbe avere classi diverse su Borsa Italiana vs Xetra.</div>
 </div>
 
 <!-- BENEDETTA -->
 <div class="pb" data-owner="benedetta">
   <div class="ph">
     <div class="ph-left"><span class="pn" style="color:var(--blue)">Portafoglio Benedetta</span><span class="ptag">Directa · Amministrato</span></div>
-    <div class="ph-right"><span class="ptot">€ 28.310</span><span class="ppnl pos">+5,5% PMC · +€ 1.472</span></div>
+    <div class="ph-right"><span class="ptot">€ 29.381</span><span class="ppnl pos">+6,2% PMC · +€ 1.713</span></div>
   </div>
   <div class="sh"><span class="sd" style="background:var(--blue)"></span>Azioni &amp; ETF</div>
   <table>
     <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
     <tbody>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vanguard.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VG</div></div><div><span>Vanguard FTSE All-World</span><span class="ticker">VWCE</span></div></div></td>
-        <td data-label="Qtà">88</td><td data-label="PMC">144,90 €</td><td data-label="Prezzo">147,59 €</td><td data-label="Valore €">12.987,92</td>
-        <td data-label="P&L" class="pc pos">+1,9%<span class="pa pos">+€ 237</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vanguard.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VG</div></div><div><span>Vanguard FTSE All-World</span><span class="ticker">VWCE · Xetra ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">88</td><td data-label="PMC">144,90 €</td>
+        <td data-label="Prezzo"><span class="pdn">147,26 €</span></td>
+        <td data-label="Valore €">12.958,88</td>
+        <td data-label="P&L" class="pc pos">+1,6%<span class="pa pos">+€ 208</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/amundi.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">AM</div></div><div><span>Amundi MSCI World</span><span class="ticker">LCUW</span></div></div></td>
-        <td data-label="Qtà">17</td><td data-label="PMC">127,12 €</td><td data-label="Prezzo">141,42 €</td><td data-label="Valore €">2.404,14</td>
-        <td data-label="P&L" class="pc pos">+11,2%<span class="pa pos">+€ 243</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/amundi.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">AM</div></div><div><span>Amundi MSCI World</span><span class="ticker">LCUW · <span class="pnc">⚠ prezzo Mar 13</span></span></div></div></td>
+        <td data-label="Qtà">17</td><td data-label="PMC">127,12 €</td>
+        <td data-label="Prezzo"><span class="pnc">141,42 €</span></td>
+        <td data-label="Valore €">2.404,14</td>
+        <td data-label="P&L" class="pc pos">+11,3%<span class="pa pos">+€ 243</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/ishares.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">iS</div></div><div><span>iShares MSCI World Quality</span><span class="ticker">IS3Q</span></div></div></td>
-        <td data-label="Qtà">28</td><td data-label="PMC">70,01 €</td><td data-label="Prezzo">69,47 €</td><td data-label="Valore €">1.945,16</td>
-        <td data-label="P&L" class="pc neg">−0,8%<span class="pa neg">−€ 15</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/ishares.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">iS</div></div><div><span>iShares MSCI World Quality</span><span class="ticker">IS3Q · Frankfurt ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">28</td><td data-label="PMC">70,02 €</td>
+        <td data-label="Prezzo"><span class="neg">68,41 €</span></td>
+        <td data-label="Valore €">1.915,48</td>
+        <td data-label="P&L" class="pc neg">−2,3%<span class="pa neg">−€ 45</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vaneck.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VE</div></div><div><span>VanEck Defense</span><span class="ticker">DFEN</span></div></div></td>
-        <td data-label="Qtà">12</td><td data-label="PMC">52,28 €</td><td data-label="Prezzo">61,69 €</td><td data-label="Valore €">740,28</td>
-        <td data-label="P&L" class="pc pos">+18,0%<span class="pa pos">+€ 113</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vaneck.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VE</div></div><div><span>VanEck Defense</span><span class="ticker">DFEN · Frankfurt ✓ Mar 17</span></div></div></td>
+        <td data-label="Qtà">12</td><td data-label="PMC">52,29 €</td>
+        <td data-label="Prezzo"><span class="pup">62,89 €</span></td>
+        <td data-label="Valore €">754,68</td>
+        <td data-label="P&L" class="pc pos">+20,3%<span class="pa pos">+€ 127</span></td>
       </tr>
     </tbody>
   </table>
-  <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
+  <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni <span style="font-size:10px;margin-left:8px;color:var(--amber)">⚠ prezzi al 13 Mar</span></div>
   <table>
     <thead><tr><th>Titolo</th><th>Nominale</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
     <tbody>
@@ -343,70 +363,88 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
       </tr>
     </tbody>
   </table>
-  <div class="fn">Liquidità broker esclusa dai totali.</div>
+  <div class="fn">Liquidità broker esclusa dai totali. IS3Q ora in perdita marginale vs PMC.</div>
 </div>
 
-<!-- SPECULATIVO — Gianluca -->
+<!-- SPECULATIVO -->
 <div class="pb" data-owner="gianluca">
   <div class="ph">
     <div class="ph-left"><span class="pn" style="color:var(--purple)">Portafoglio Speculativo</span><span class="ptag">Directa + BG Saxo · Gianluca</span></div>
-    <div class="ph-right"><span class="ptot">€ 2.573</span><span class="ppnl neg">−10,8% PMC · −€ 311</span></div>
+    <div class="ph-right"><span class="ptot">€ 3.024</span><span class="ppnl pos">+17,5% PMC · +€ 450</span></div>
   </div>
-  <div class="sh"><span class="sd" style="background:var(--purple)"></span>Azioni</div>
+  <div class="sh"><span class="sd" style="background:var(--purple)"></span>Azioni · Prezzi aggiornati al 19 Mar 2026</div>
   <table>
-    <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
+    <thead><tr><th>Asset</th><th>Qtà</th><th>PMC ($)</th><th>Prezzo</th><th>Valore €</th><th>P&amp;L</th></tr></thead>
     <tbody>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/rocketlabusa.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">RL</div></div><div><span>Rocket Lab USA</span><span class="ticker">RKLB · NASDAQ</span></div></div></td>
-        <td data-label="Qtà">10</td><td data-label="PMC">43,48 $</td><td data-label="Prezzo">68,37 $</td><td data-label="Valore €">594,40</td>
-        <td data-label="P&L" class="pc pos">+57,2%<span class="pa pos">+€ 216</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/rocketlabusa.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">RL</div></div><div><span>Rocket Lab USA</span><span class="ticker">RKLB · NASDAQ ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">10</td><td data-label="PMC">43,48 $</td>
+        <td data-label="Prezzo"><span class="neg">71,94 $ → 62,55 €</span></td>
+        <td data-label="Valore €">625,50</td>
+        <td data-label="P&L" class="pc pos">+65,5%<span class="pa pos">+€ 277</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/abc.xyz" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">GG</div></div><div><span>Alphabet (Google)</span><span class="ticker">GOOGL · NASDAQ</span></div></div></td>
-        <td data-label="Qtà">2</td><td data-label="PMC">328,81 $</td><td data-label="Prezzo">303,45 $</td><td data-label="Valore €">527,91</td>
-        <td data-label="P&L" class="pc neg">−7,7%<span class="pa neg">−€ 44</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/abc.xyz" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">GG</div></div><div><span>Alphabet (Google)</span><span class="ticker">GOOGL · NASDAQ ✓ Mar 18</span></div></div></td>
+        <td data-label="Qtà">2</td><td data-label="PMC">328,81 $</td>
+        <td data-label="Prezzo"><span class="neg">307,69 $ → 267,54 €</span></td>
+        <td data-label="Valore €">535,07</td>
+        <td data-label="P&L" class="pc neg">−6,4%<span class="pa neg">−€ 37</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/leonardocompany.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">LD</div></div><div><span>Leonardo S.p.A.</span><span class="ticker">LDO · Borsa Italiana</span></div></div></td>
-        <td data-label="Qtà">6</td><td data-label="PMC">46,26 €</td><td data-label="Prezzo">63,88 €</td><td data-label="Valore €">383,28</td>
-        <td data-label="P&L" class="pc pos">+38,1%<span class="pa pos">+€ 106</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/leonardocompany.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">LD</div></div><div><span>Leonardo S.p.A.</span><span class="ticker">LDO · Borsa Italiana ✓ Mar 18</span></div></div></td>
+        <td data-label="Qtà">6</td><td data-label="PMC">46,26 €</td>
+        <td data-label="Prezzo"><span class="pup">63,32 €</span></td>
+        <td data-label="Valore €">379,92</td>
+        <td data-label="P&L" class="pc pos">+36,9%<span class="pa pos">+€ 126</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/lottomatica.it" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">LT</div></div><div><span>Lottomatica Group</span><span class="ticker">LTMC · Borsa Italiana</span></div></div></td>
-        <td data-label="Qtà">7</td><td data-label="PMC">22,45 €</td><td data-label="Prezzo">24,96 €</td><td data-label="Valore €">174,72</td>
-        <td data-label="P&L" class="pc pos">+11,2%<span class="pa pos">+€ 18</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/lottomatica.it" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">LT</div></div><div><span>Lottomatica Group</span><span class="ticker">LTMC · Borsa Italiana ✓ Mar 16</span></div></div></td>
+        <td data-label="Qtà">7</td><td data-label="PMC">22,45 €</td>
+        <td data-label="Prezzo"><span class="pdn">24,90 €</span></td>
+        <td data-label="Valore €">174,30</td>
+        <td data-label="P&L" class="pc pos">+10,9%<span class="pa pos">+€ 17</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vikingtherapeutics.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VK</div></div><div><span>Viking Therapeutics</span><span class="ticker">VKTX · NASDAQ</span></div></div></td>
-        <td data-label="Qtà">8</td><td data-label="PMC">37,87 $</td><td data-label="Prezzo">35,47 $</td><td data-label="Valore €">246,89</td>
-        <td data-label="P&L" class="pc neg">−6,3%<span class="pa neg">−€ 17</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/vikingtherapeutics.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VK</div></div><div><span>Viking Therapeutics</span><span class="ticker">VKTX · NASDAQ ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">8</td><td data-label="PMC">37,87 $</td>
+        <td data-label="Prezzo"><span class="pup">36,36 $ → 31,62 €</span></td>
+        <td data-label="Valore €">252,94</td>
+        <td data-label="P&L" class="pc neg">−4,0%<span class="pa neg">−€ 11</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/recursion.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">RX</div></div><div><span>Recursion Pharmaceuticals</span><span class="ticker">RXRX · NASDAQ</span></div></div></td>
-        <td data-label="Qtà">65</td><td data-label="PMC">4,62 $</td><td data-label="Prezzo">3,29 $</td><td data-label="Valore €">186,00</td>
-        <td data-label="P&L" class="pc neg">−28,8%<span class="pa neg">−€ 75</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/recursion.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">RX</div></div><div><span>Recursion Pharmaceuticals</span><span class="ticker">RXRX · NASDAQ ✓ Mar 16</span></div></div></td>
+        <td data-label="Qtà">65</td><td data-label="PMC">4,62 $</td>
+        <td data-label="Prezzo"><span class="pup">3,39 $ → 2,95 €</span></td>
+        <td data-label="Valore €">191,61</td>
+        <td data-label="P&L" class="pc neg">−26,6%<span class="pa neg">−€ 71</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/kkr.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">KK</div></div><div><span>KKR &amp; Co.</span><span class="ticker">KKR · NYSE</span></div></div></td>
-        <td data-label="Qtà">4</td><td data-label="PMC">114,59 $</td><td data-label="Prezzo">83,88 $</td><td data-label="Valore €">291,73</td>
-        <td data-label="P&L" class="pc neg">−26,8%<span class="pa neg">−€ 107</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/kkr.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">KK</div></div><div><span>KKR &amp; Co.</span><span class="ticker">KKR · NYSE ✓ Mar 18</span></div></div></td>
+        <td data-label="Qtà">4</td><td data-label="PMC">114,59 $</td>
+        <td data-label="Prezzo"><span class="pup">90,63 $ → 78,80 €</span></td>
+        <td data-label="Valore €">315,19</td>
+        <td data-label="P&L" class="pc neg">−20,9%<span class="pa neg">−€ 84</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/man.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">MN</div></div><div><span>Man Group Plc</span><span class="ticker">EMG · LSE (GBp)</span></div></div></td>
-        <td data-label="Qtà">100</td><td data-label="PMC">258,78 p</td><td data-label="Prezzo">252,40 p</td><td data-label="Valore €">293,46</td>
-        <td data-label="P&L" class="pc neg">−2,5%<span class="pa neg">−€ 7</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/man.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">MN</div></div><div><span>Man Group Plc</span><span class="ticker">EMG · LSE ✓ Mar 10 (GBp)</span></div></div></td>
+        <td data-label="Qtà">100</td><td data-label="PMC">258,78 p</td>
+        <td data-label="Prezzo"><span class="pup">257,80 p → 299,7 €</span></td>
+        <td data-label="Valore €">299,72</td>
+        <td data-label="P&L" class="pc neg">−0,4%<span class="pa neg">−€ 1</span></td>
       </tr>
       <tr>
-        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/virtu.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VF</div></div><div><span>Virtu Financial</span><span class="ticker">VIRT · NASDAQ</span></div></div></td>
-        <td data-label="Qtà">7</td><td data-label="PMC">40,30 $</td><td data-label="Prezzo">40,42 $</td><td data-label="Valore €">246,01</td>
-        <td data-label="P&L" class="pc neu">+0,3%<span class="pa neu">+€ 1</span></td>
+        <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/virtu.com" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">VF</div></div><div><span>Virtu Financial</span><span class="ticker">VIRT · NYSE ✓ Mar 19</span></div></div></td>
+        <td data-label="Qtà">7</td><td data-label="PMC">40,30 $</td>
+        <td data-label="Prezzo"><span class="pup">41,05 $ → 35,70 €</span></td>
+        <td data-label="Valore €">249,90</td>
+        <td data-label="P&L" class="pc pos">+1,9%<span class="pa pos">+€ 5</span></td>
       </tr>
     </tbody>
   </table>
-  <div class="fn">Prezzi Man Group in pence, convertiti con GBP/EUR 1,1627. Liquidità broker esclusa.</div>
+  <div class="fn">Prezzi Man Group in pence (GBp) convertiti con GBP/EUR 1,1627. Liquidità broker esclusa.<br>RKLB in calo oggi −8,5% (intraday): cedole di un bond da $1mld. I dollari sono convertiti al tasso 1 USD = 0,8695 €.</div>
 </div>
 
-<!-- PREVIDENZA — both -->
+<!-- PREVIDENZA -->
 <div class="pb" data-owner="both">
   <div class="ph">
     <div class="ph-left"><span class="pn" style="color:var(--green)">Previdenza &amp; Liquidità</span><span class="ptag">Fondi Pensione + Conti Bancari</span></div>
@@ -417,7 +455,7 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
     <tbody>
       <tr data-row-owner="gianluca">
         <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/arca.it" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">AR</div></div><div><span>Fondo Arca Crescita</span><span class="ticker">Fondo Pensione</span></div></div></td>
-        <td data-label="Intestatario">Gianluca</td><td data-label="Tipo">Previdenziale</td><td data-label="Saldo (€)">31.543,00</td><td data-label="% Patrimonio" class="pos">14,9%</td>
+        <td data-label="Intestatario">Gianluca</td><td data-label="Tipo">Previdenziale</td><td data-label="Saldo (€)">31.543,00</td><td data-label="% Patrimonio" class="pos">14,8%</td>
       </tr>
       <tr data-row-owner="benedetta">
         <td><div class="ac-wrap"><div class="lw"><div class="lf" style="display:flex;font-size:18px">🏦</div></div><div><span>Fondo Pensione</span><span class="ticker">Stima arrotondata</span></div></div></td>
@@ -425,17 +463,17 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
       </tr>
       <tr data-row-owner="gianluca">
         <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/bbva.it" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">BB</div></div><div><span>Conto BBVA 1,75%</span><span class="ticker">Deposito Bancario</span></div></div></td>
-        <td data-label="Intestatario">Gianluca</td><td data-label="Tipo">Liquidità</td><td data-label="Saldo (€)">12.000,00</td><td data-label="% Patrimonio">5,7%</td>
+        <td data-label="Intestatario">Gianluca</td><td data-label="Tipo">Liquidità</td><td data-label="Saldo (€)">12.000,00</td><td data-label="% Patrimonio">5,6%</td>
       </tr>
       <tr data-row-owner="benedetta">
         <td><div class="ac-wrap"><div class="lw"><img src="https://logo.clearbit.com/bbva.it" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="lf">BB</div></div><div><span>Conto BBVA 1,75%</span><span class="ticker">Deposito Bancario</span></div></div></td>
-        <td data-label="Intestatario">Benedetta</td><td data-label="Tipo">Liquidità</td><td data-label="Saldo (€)">15.000,00</td><td data-label="% Patrimonio">7,1%</td>
+        <td data-label="Intestatario">Benedetta</td><td data-label="Tipo">Liquidità</td><td data-label="Saldo (€)">15.000,00</td><td data-label="% Patrimonio">7,0%</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<!-- ASSET REALI — both (shared) -->
+<!-- ASSET REALI -->
 <div class="pb" data-owner="both">
   <div class="ph">
     <div class="ph-left"><span class="pn" style="color:#8c621e">Asset Reali</span><span class="ptag">Immobiliare + Mobilità · Condiviso</span></div>
@@ -458,56 +496,54 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
   </table>
 </div>
 
-</div><!-- /table-section -->
-</div><!-- /wrap -->
+</div>
+</div>
 
 <footer>
-  <span>Report Patrimoniale — Gianluca &amp; Benedetta — 13.03.2026</span>
-  <span>Valori di mercato stimati. Non costituisce consulenza finanziaria.</span>
+  <span>Report Patrimoniale — Gianluca &amp; Benedetta</span>
+  <span>Prezzi azionari: 19 Mar 2026 · Bond e LCUW/COPX: 13 Mar 2026. Non costituisce consulenza finanziaria.</span>
 </footer>
 
 <script>
-// ── DATA PER VISTA ──
+// ── DATA ──
+const FX_USD = 0.8695, FX_GBP = 1.1627;
+
 const DATA = {
   famiglia: {
-    label: 'Patrimonio Netto Totale',
-    patrimonio: '€ 212.083',
-    fin: '€ 67.048', finPct: '31,6',
-    prev: '€ 51.543', prevPct: '24,3',
-    liq: '€ 27.000', liqPct: '12,7',
-    real: '€ 64.500', realPct: '30,4',
-    prevTot: '€ 78.543',
-    macro: { labels:['Asset Finanziari','Asset Reali Netti','Previdenza','Liquidità Bancaria'], values:[67048,64500,51543,27000], colors:['#8c621e','#a84e1e','#1a6e47','#2d6ea8'] },
-    pf:    { labels:['Serio (Gianluca)','Benedetta','Speculativo'], values:[36165,28310,2573], colors:['#8c621e','#2d6ea8','#6b4daa'] },
-    alloc: { pct: ['53,9','42,2','3,8'], w: ['53.9%','42.2%','3.8%'] }
+    label:'Patrimonio Netto Totale', patrimonio:'€ 213.900',
+    fin:'€ 68.969', finPct:'32,3',
+    prev:'€ 51.543', prevPct:'24,1',
+    liq:'€ 27.000', liqPct:'12,6',
+    real:'€ 64.500', realPct:'30,2',
+    prevTot:'€ 78.543',
+    macro:{labels:['Asset Finanziari','Asset Reali Netti','Previdenza','Liquidità Bancaria'],values:[68969,64500,51543,27000],colors:['#8c621e','#a84e1e','#1a6e47','#2d6ea8']},
+    pf:{labels:['Serio (Gianluca)','Benedetta','Speculativo'],values:[36563,29381,3024],colors:['#8c621e','#2d6ea8','#6b4daa']},
+    alloc:{pct:['53,0','42,6','4,4'],w:['53%','42.6%','4.4%']}
   },
   gianluca: {
-    label: 'Patrimonio Netto Gianluca',
-    patrimonio: '€ 116.251',
-    fin: '€ 38.738', finPct: '33,3',
-    prev: '€ 31.543', prevPct: '27,1',
-    liq: '€ 12.000', liqPct: '10,3',
-    real: '€ 32.250', realPct: '27,7', /* metà asset reali */
-    prevTot: '€ 43.543',
-    macro: { labels:['Asset Finanziari','Asset Reali (50%)','Previdenza','Liquidità'], values:[38738,32250,31543,12000], colors:['#8c621e','#a84e1e','#1a6e47','#2d6ea8'] },
-    pf:    { labels:['Portafoglio Serio','Portafoglio Speculativo'], values:[36165,2573], colors:['#8c621e','#6b4daa'] },
-    alloc: { pct: ['93,4','—','6,6'], w: ['93.4%','0%','6.6%'] }
+    label:'Patrimonio Netto Gianluca', patrimonio:'€ 117.719',
+    fin:'€ 39.587', finPct:'33,6',
+    prev:'€ 31.543', prevPct:'26,8',
+    liq:'€ 12.000', liqPct:'10,2',
+    real:'€ 32.250', realPct:'27,4',
+    prevTot:'€ 43.543',
+    macro:{labels:['Asset Finanziari','Asset Reali (50%)','Previdenza','Liquidità'],values:[39587,32250,31543,12000],colors:['#8c621e','#a84e1e','#1a6e47','#2d6ea8']},
+    pf:{labels:['Portafoglio Serio','Portafoglio Speculativo'],values:[36563,3024],colors:['#8c621e','#6b4daa']},
+    alloc:{pct:['92,3','—','7,7'],w:['92.3%','0%','7.7%']}
   },
   benedetta: {
-    label: 'Patrimonio Netto Benedetta',
-    patrimonio: '€ 95.560',
-    fin: '€ 28.310', finPct: '29,6',
-    prev: '€ 20.000', prevPct: '20,9',
-    liq: '€ 15.000', liqPct: '15,7',
-    real: '€ 32.250', realPct: '33,7',
-    prevTot: '€ 35.000',
-    macro: { labels:['Asset Finanziari','Asset Reali (50%)','Previdenza','Liquidità'], values:[28310,32250,20000,15000], colors:['#2d6ea8','#a84e1e','#1a6e47','#8c621e'] },
-    pf:    { labels:['Portafoglio Benedetta'], values:[28310], colors:['#2d6ea8'] },
-    alloc: { pct: ['—','100','—'], w: ['0%','100%','0%'] }
+    label:'Patrimonio Netto Benedetta', patrimonio:'€ 95.931',
+    fin:'€ 29.381', finPct:'30,6',
+    prev:'€ 20.000', prevPct:'20,9',
+    liq:'€ 15.000', liqPct:'15,6',
+    real:'€ 32.250', realPct:'33,6',
+    prevTot:'€ 35.000',
+    macro:{labels:['Asset Finanziari','Asset Reali (50%)','Previdenza','Liquidità'],values:[29381,32250,20000,15000],colors:['#2d6ea8','#a84e1e','#1a6e47','#8c621e']},
+    pf:{labels:['Portafoglio Benedetta'],values:[29381],colors:['#2d6ea8']},
+    alloc:{pct:['—','100','—'],w:['0%','100%','0%']}
   }
 };
 
-// ── CHARTS ──
 Chart.defaults.color='#706860';
 Chart.defaults.borderColor='#e2dcd4';
 Chart.defaults.font.family="'IBM Plex Mono', monospace";
@@ -522,8 +558,8 @@ pfOpts.data={labels:[],datasets:[{data:[],backgroundColor:[],borderColor:'#f3f1e
 const macroChart=new Chart(document.getElementById('macroChart'),macroOpts);
 const pfChart=new Chart(document.getElementById('pfChart'),pfOpts);
 
-function updateCharts(filter) {
-  const d=DATA[filter];
+function updateCharts(f){
+  const d=DATA[f];
   macroChart.data.labels=d.macro.labels;
   macroChart.data.datasets[0].data=d.macro.values;
   macroChart.data.datasets[0].backgroundColor=d.macro.colors;
@@ -531,7 +567,6 @@ function updateCharts(filter) {
   document.getElementById('macroLegend').innerHTML=d.macro.labels.map((l,i)=>
     `<div class="li"><div class="ld" style="background:${d.macro.colors[i]}"></div>${l}<span class="lv">&nbsp;€ ${d.macro.values[i].toLocaleString('it-IT',{maximumFractionDigits:0})}</span></div>`
   ).join('');
-
   pfChart.data.labels=d.pf.labels;
   pfChart.data.datasets[0].data=d.pf.values;
   pfChart.data.datasets[0].backgroundColor=d.pf.colors;
@@ -541,21 +576,12 @@ function updateCharts(filter) {
   ).join('');
 }
 
-// ── FILTER ──
-function setFilter(filter, btn) {
-  // update buttons
-  document.querySelectorAll('.filter-btn').forEach(b=>{
-    b.classList.remove('active');
-  });
+function setFilter(filter,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-
   const d=DATA[filter];
-
-  // update header
   document.getElementById('pv-label').textContent=d.label;
   document.getElementById('pv-value').textContent=d.patrimonio;
-
-  // update KPIs
   document.getElementById('kpi-fin').textContent=d.fin;
   document.getElementById('kpi-fin-pct').textContent=d.finPct+'%';
   document.getElementById('kpi-prev').textContent=d.prev;
@@ -565,61 +591,40 @@ function setFilter(filter, btn) {
   document.getElementById('kpi-real').textContent=d.real;
   document.getElementById('kpi-real-pct').textContent=d.realPct+'%';
   document.getElementById('prev-tot').textContent=d.prevTot;
-
-  // update charts
   updateCharts(filter);
-
-  // filter portfolio blocks
   document.querySelectorAll('.pb').forEach(el=>{
-    const owner=el.dataset.owner;
-    const show = owner==='both' || owner===filter || filter==='famiglia';
-    el.classList.toggle('hidden',!show);
+    const o=el.dataset.owner;
+    el.classList.toggle('hidden',!(o==='both'||o===filter||filter==='famiglia'));
   });
-
-  // filter alloc items
   document.querySelectorAll('.alloc-item').forEach(el=>{
-    const owner=el.dataset.owner;
-    const show = owner===filter || filter==='famiglia';
-    el.classList.toggle('hidden',!show);
+    el.classList.toggle('hidden',!(el.dataset.owner===filter||filter==='famiglia'));
   });
-
-  // filter rows inside "both" tables
   document.querySelectorAll('tr[data-row-owner]').forEach(row=>{
-    const owner=row.dataset.rowOwner;
-    const show = owner===filter || filter==='famiglia';
-    row.style.display = show ? '' : 'none';
+    row.style.display=(row.dataset.rowOwner===filter||filter==='famiglia')?'':'none';
   });
-
-  // update alloc percentages
   const ai=d.alloc;
-  const items=document.querySelectorAll('.alloc-item');
-  [0,1,2].forEach(i=>{
-    if(items[i]) {
-      const ap=items[i].querySelector('.ap');
-      if(ap) ap.textContent=ai.pct[i]==='—' ? '—' : ai.pct[i]+'% degli asset finanziari';
-      const af=items[i].querySelector('.af');
-      if(af) { af.style.width='0'; setTimeout(()=>{ af.style.width=ai.w[i]; },50); }
-    }
+  document.querySelectorAll('.alloc-item').forEach((it,i)=>{
+    const ap=it.querySelector('.ap');
+    if(ap) ap.textContent=ai.pct[i]==='—'?'—':ai.pct[i]+'% degli asset finanziari';
+    const af=it.querySelector('.af');
+    if(af){af.style.width='0';setTimeout(()=>{af.style.width=ai.w[i];},50);}
   });
 }
 
-// ── INIT ──
 updateCharts('famiglia');
 
-// animated alloc bars on scroll
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      const d=DATA['famiglia'].alloc;
-      document.getElementById('ab1').style.width=d.w[0];
-      document.getElementById('ab2').style.width=d.w[1];
-      document.getElementById('ab3').style.width=d.w[2];
+      document.getElementById('ab1').style.width='53%';
+      document.getElementById('ab2').style.width='42.6%';
+      document.getElementById('ab3').style.width='4.4%';
       obs.disconnect();
     }
   });
 },{threshold:0.2});
-const firstBar=document.getElementById('ab1');
-if(firstBar) obs.observe(firstBar);
+const fb=document.getElementById('ab1');
+if(fb) obs.observe(fb);
 </script>
 </body>
 </html>
