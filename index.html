@@ -236,6 +236,7 @@ function nameCell(a) {
 }
 
 function priceDisplay(a) {
+  if(a.type === 'bond') return fmt(a.price,2); // show as %, e.g. 98,08
   const eur = toEUR(a.price, a.currency);
   if(a.currency==='EUR') return fmt(a.price)+' €';
   if(a.currency==='USD') return fmt(a.price,2)+' $ → '+fmt(eur)+' €';
@@ -244,8 +245,11 @@ function priceDisplay(a) {
 }
 
 function calc(a) {
-  const priceEUR = toEUR(a.price, a.currency);
-  const pmcEUR   = toEUR(a.pmc,   a.currency);
+  // Bond prices are in % (e.g. 98.08 = 98.08% of face value)
+  // so effective price per unit = price/100
+  const factor   = a.type === 'bond' ? 1/100 : 1;
+  const priceEUR = toEUR(a.price * factor, a.currency);
+  const pmcEUR   = toEUR(a.pmc   * factor, a.currency);
   const value    = priceEUR * a.qty;
   const cost     = pmcEUR   * a.qty;
   return { value, cost, pct:((priceEUR-pmcEUR)/pmcEUR)*100, abs:value-cost };
@@ -254,8 +258,9 @@ function calc(a) {
 function renderTable(assets, headers) {
   const rows = assets.map(a => {
     const c = calc(a);
-    const pmcStr = a.currency==='EUR' ? fmt(a.pmc)+' €'
-                 : a.currency==='GBp' ? fmt(a.pmc,0)+' p'
+    const pmcStr = a.type === 'bond'   ? fmt(a.pmc,2)
+                 : a.currency==='EUR'  ? fmt(a.pmc)+' €'
+                 : a.currency==='GBp'  ? fmt(a.pmc,0)+' p'
                  : fmt(a.pmc,2)+' '+a.currency;
     return `<tr>
       <td>${nameCell(a)}</td>
@@ -293,6 +298,20 @@ function computeTotals() {
   const vReal   = REAL_ASSETS.reduce((s,x)=>s+(x.valore_stima+x.debito),0);
   const vTot    = vFin+vPrev+vLiq+vReal;
 
+  // Per-owner sums — tutto da data.js, zero hardcoding
+  const ownerSum = (arr,owner) => arr.filter(x=>x.owner===owner).reduce((s,x)=>s+x.value,0);
+  const vPrevG = ownerSum(PREVIDENZA,'gianluca');
+  const vPrevB = ownerSum(PREVIDENZA,'benedetta');
+  const vLiqG  = ownerSum(CONTI,'gianluca');
+  const vLiqB  = ownerSum(CONTI,'benedetta');
+  // Asset condivisi al 50%, owner specifico al 100%
+  const shareFor = owner => REAL_ASSETS.reduce((s,x) => {
+    const netto = x.valore_stima+x.debito;
+    return s + netto*(x.owner==='entrambi'?0.5:x.owner===owner?1:0);
+  },0);
+  const vRealG = shareFor('gianluca');
+  const vRealB = shareFor('benedetta');
+
   return {
     vSerio,vBene,vSpec,vFin,
     cSerio,cBene,cSpec,
@@ -300,8 +319,9 @@ function computeTotals() {
     pctBene: ((vBene-cBene)/cBene)*100,   absBene: vBene-cBene,
     pctSpec: ((vSpec-cSpec)/cSpec)*100,   absSpec: vSpec-cSpec,
     vPrev,vLiq,vReal,vTot,
-    vGianluca: vSerio+vSpec+31543+12000+vReal/2,
-    vBenedetta:vBene+20000+15000+vReal/2,
+    vPrevG,vPrevB,vLiqG,vLiqB,vRealG,vRealB,
+    vGianluca:  vSerio+vSpec+vPrevG+vLiqG+vRealG,
+    vBenedetta: vBene+vPrevB+vLiqB+vRealB,
   };
 }
 
@@ -440,9 +460,16 @@ function updateCharts(t,view){
 /* ─── KPIs ─── */
 function updateKPIs(t,view){
   let pat,fin,prev,liq,real;
-  if(view==='famiglia'){pat=t.vTot;fin=t.vFin;prev=t.vPrev;liq=t.vLiq;real=t.vReal;setText('pv-label','Patrimonio Netto Totale');}
-  else if(view==='gianluca'){pat=t.vGianluca;fin=t.vSerio+t.vSpec;prev=31543;liq=12000;real=t.vReal/2;setText('pv-label','Patrimonio Netto Gianluca');}
-  else{pat=t.vBenedetta;fin=t.vBene;prev=20000;liq=15000;real=t.vReal/2;setText('pv-label','Patrimonio Netto Benedetta');}
+  if(view==='famiglia'){
+    pat=t.vTot; fin=t.vFin; prev=t.vPrev; liq=t.vLiq; real=t.vReal;
+    setText('pv-label','Patrimonio Netto Totale');
+  } else if(view==='gianluca'){
+    pat=t.vGianluca; fin=t.vSerio+t.vSpec; prev=t.vPrevG; liq=t.vLiqG; real=t.vRealG;
+    setText('pv-label','Patrimonio Netto Gianluca');
+  } else {
+    pat=t.vBenedetta; fin=t.vBene; prev=t.vPrevB; liq=t.vLiqB; real=t.vRealB;
+    setText('pv-label','Patrimonio Netto Benedetta');
+  }
   setText('pv-value',fmtK(pat));
   setText('kpi-fin', fmtK(fin));  setText('kpi-fin-pct', (fin/pat*100).toFixed(1)+'%');
   setText('kpi-prev',fmtK(prev)); setText('kpi-prev-pct',(prev/pat*100).toFixed(1)+'%');
