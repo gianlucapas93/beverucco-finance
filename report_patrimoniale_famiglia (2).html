@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Patrimoniale Famigliare — 13 Marzo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f4f2ee;
+    --surface: #ffffff;
+    --surface2: #f9f8f6;
+    --border: #e0dbd4;
+    --gold: #9a7030;
+    --gold-light: #b8892c;
+    --green: #1e7e52;
+    --red: #c0392b;
+    --text: #1a1a1a;
+    --muted: #7a7060;
+    --dim: #c8c0b4;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.15;
+  }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 0 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .header-left h1 em { color: var(--gold); font-style: italic; }
+  .header-sub {
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .header-right { text-align: right; }
+  .patrimonio-label {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .patrimonio-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-top: 4px;
+  }
+  .header-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 16px;
+    padding-top: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .kpi-card:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(154,112,48,0.08); }
+  .kpi-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .kpi-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    color: var(--text);
+    margin-top: 6px;
+    line-height: 1;
+  }
+  .kpi-pct {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .kpi-pct span { color: var(--gold-light); }
+
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .chart-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 20px;
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .legend {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .legend-val { color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+
+  .alloc-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+  .alloc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .alloc-name { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+  .alloc-amount { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--text); margin-bottom: 8px; }
+  .alloc-bar-wrap { height: 4px; background: var(--dim); border-radius: 2px; overflow: hidden; }
+  .alloc-bar { height: 100%; border-radius: 2px; }
+  .alloc-pct { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 5px; }
+
+  .table-section { animation: fadeUp 0.6s 0.3s ease both; }
+  .portfolio-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .portfolio-header:hover { background: var(--surface2); }
+  .portfolio-name {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .portfolio-tag {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-left: 10px;
+  }
+  .portfolio-total { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); }
+  .portfolio-pnl { font-size: 12px; font-family: 'IBM Plex Mono', monospace; margin-left: 10px; }
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    padding: 10px 22px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  th:first-child { text-align: left; }
+  td {
+    padding: 11px 22px;
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(224,219,212,0.7);
+  }
+  td:first-child {
+    text-align: left;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+
+  .ticker {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 1px;
+    letter-spacing: 1px;
+  }
+  .bar-bg {
+    display: inline-block;
+    width: 50px;
+    height: 3px;
+    background: var(--dim);
+    border-radius: 2px;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; }
+
+  .footnote {
+    padding: 8px 22px;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  footer {
+    margin-top: 60px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    font-size: 11px;
+    color: var(--dim);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 800px) {
+    .kpi-grid, .alloc-row { grid-template-columns: repeat(2, 1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    header { flex-direction: column; align-items: flex-start; }
+    .header-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-left">
+      <h1>Report <em>Patrimoniale</em><br>Famigliare</h1>
+      <div class="header-sub">Aggiornato al 13 Marzo 2026 &nbsp;·&nbsp; Valuta base: EUR</div>
+    </div>
+    <div class="header-right">
+      <div class="patrimonio-label">Patrimonio Netto Totale</div>
+      <div class="patrimonio-value">€ 214.234</div>
+      <div class="header-meta">
+        Escluso Bending Spoons &nbsp;·&nbsp; 1 USD = 0,8718 € &nbsp;·&nbsp; 1 GBP = 1,1574 €
+      </div>
+    </div>
+  </header>
+
+  <div class="section-label">Riepilogo Macro</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Asset Finanziari</div>
+      <div class="kpi-value">€ 69.792</div>
+      <div class="kpi-pct"><span>32,6%</span> del patrimonio</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Previdenza Totale</div>
+      <div class="kpi-value">€ 52.942</div>
+      <div class="kpi-pct"><span>24,7%</span> del patrimonio</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Liquidità Bancaria</div>
+      <div class="kpi-value">€ 27.000</div>
+      <div class="kpi-pct"><span>12,6%</span> del patrimonio</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Asset Reali Netti</div>
+      <div class="kpi-value">€ 64.500</div>
+      <div class="kpi-pct"><span>30,1%</span> del patrimonio</div>
+    </div>
+  </div>
+
+  <div class="section-label">Composizione Patrimoniale</div>
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Allocazione Macro</div>
+      <div class="chart-wrapper"><canvas id="macroChart"></canvas></div>
+      <div class="legend" id="macroLegend"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Portafoglio Finanziario — Breakdown</div>
+      <div class="chart-wrapper"><canvas id="portfolioChart"></canvas></div>
+      <div class="legend" id="portfolioLegend"></div>
+    </div>
+  </div>
+
+  <div class="section-label">Portafogli per Intestatario</div>
+  <div class="alloc-row">
+    <div class="alloc-card">
+      <div class="alloc-name">Portafoglio Serio <span style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:10px">(Gianluca)</span></div>
+      <div class="alloc-amount">€ 37.420</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:53.6%;background:var(--gold)"></div></div>
+      <div class="alloc-pct">53,6% degli asset finanziari</div>
+    </div>
+    <div class="alloc-card">
+      <div class="alloc-name">Portafoglio Benedetta <span style="color:#3a7fc1;font-family:'IBM Plex Mono',monospace;font-size:10px">(Benedetta)</span></div>
+      <div class="alloc-amount">€ 29.426</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:42.2%;background:#3a7fc1"></div></div>
+      <div class="alloc-pct">42,2% degli asset finanziari</div>
+    </div>
+    <div class="alloc-card">
+      <div class="alloc-name">Fun + Aggressivo <span style="color:#7c5cbf;font-family:'IBM Plex Mono',monospace;font-size:10px">(Gianluca)</span></div>
+      <div class="alloc-amount">€ 2.946</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:4.2%;background:#7c5cbf"></div></div>
+      <div class="alloc-pct">4,2% degli asset finanziari</div>
+    </div>
+    <div class="alloc-card">
+      <div class="alloc-name">Liquidità Broker <span style="color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10px">(Totale)</span></div>
+      <div class="alloc-amount">€ 2.380</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar" style="width:3.4%;background:var(--muted)"></div></div>
+      <div class="alloc-pct">3,4% degli asset finanziari</div>
+    </div>
+  </div>
+
+  <div class="section-label">Portafogli Dettaglio</div>
+  <div class="table-section">
+
+    <!-- SERIO -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name">Portafoglio Serio</span>
+          <span class="portfolio-tag">Directa · Amministrato · Gianluca</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 37.420,40</span>
+          <span class="portfolio-pnl pos">+9,8% PMC medio</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&L %</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Vanguard FTSE All-World<span class="ticker">VWCE · 75 BIT + 23 Xetra</span></td>
+            <td>98</td><td>134,10 €*</td><td>147,59 €</td><td>14.463,82</td>
+            <td class="pos">+10,1%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:100%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>Amundi MSCI World<span class="ticker">LCUW</span></td>
+            <td>51</td><td>120,17 €</td><td>141,42 €</td><td>7.212,42</td>
+            <td class="pos">+17,7%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:50%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>EU 55 4% — Obbligazione<span class="ticker">EU 2055</span></td>
+            <td>5.010</td><td>99,11</td><td>98,08</td><td>4.913,81</td>
+            <td class="neg">−1,0%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:34%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>Romania 37 6.125%<span class="ticker">RO 2037</span></td>
+            <td>3.000</td><td>99,84</td><td>101,49</td><td>3.044,70</td>
+            <td class="pos">+1,7%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:21%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>BTP MZ28 0,25%<span class="ticker">BTP 2028</span></td>
+            <td>3.000</td><td>95,70</td><td>95,46</td><td>2.863,80</td>
+            <td class="neg">−0,3%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:20%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>BTP AP30 1,35%<span class="ticker">BTP 2030</span></td>
+            <td>3.000</td><td>94,86</td><td>94,47</td><td>2.834,10</td>
+            <td class="neg">−0,4%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:20%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>VanEck Uranium<span class="ticker">NUKL</span></td>
+            <td>9</td><td>47,28 €</td><td>61,88 €</td><td>556,92</td>
+            <td class="pos">+30,9%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:4%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr>
+            <td>Global X Copper<span class="ticker">COPX</span></td>
+            <td>5</td><td>43,57 €</td><td>55,11 €</td><td>275,55</td>
+            <td class="pos">+26,5%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:2%;background:var(--gold)"></span></span></td>
+          </tr>
+          <tr style="background:var(--surface2)">
+            <td style="color:var(--muted);font-size:12px">Liquidità Broker</td>
+            <td>—</td><td>—</td><td>—</td><td style="color:var(--muted)">1.255,28</td><td>—</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footnote">* PMC ponderato sulle 75 quote BIT e 23 quote Xetra</div>
+    </div>
+
+    <!-- BENEDETTA -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name" style="color:#3a7fc1">Portafoglio Benedetta</span>
+          <span class="portfolio-tag">Directa · Amministrato · Benedetta</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 29.425,73</span>
+          <span class="portfolio-pnl pos">+5,5% PMC medio</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&L %</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Vanguard FTSE All-World<span class="ticker">VWCE</span></td>
+            <td>88</td><td>144,90 €</td><td>147,59 €</td><td>12.987,92</td>
+            <td class="pos">+1,9%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:100%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr>
+            <td>BTP Italia GN30<span class="ticker">BTP IT GN30</span></td>
+            <td>10.000</td><td>100,89</td><td>102,33</td><td>10.233,00</td>
+            <td class="pos">+1,4%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:79%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr>
+            <td>Amundi MSCI World<span class="ticker">LCUW</span></td>
+            <td>17</td><td>127,12 €</td><td>141,42 €</td><td>2.404,14</td>
+            <td class="pos">+11,2%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:18%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr>
+            <td>iShares MSCI Quality<span class="ticker">IS3Q</span></td>
+            <td>28</td><td>70,01 €</td><td>69,47 €</td><td>1.945,16</td>
+            <td class="neg">−0,8%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:15%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr>
+            <td>VanEck Defense<span class="ticker">DFEN</span></td>
+            <td>12</td><td>52,28 €</td><td>61,69 €</td><td>740,28</td>
+            <td class="pos">+18,0%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:6%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr style="background:var(--surface2)">
+            <td style="color:var(--muted);font-size:12px">Liquidità Broker</td>
+            <td>—</td><td>—</td><td>—</td><td style="color:var(--muted)">1.115,23</td><td>—</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FUN -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name" style="color:#7c5cbf">Portafoglio Fun</span>
+          <span class="portfolio-tag">Directa · Amministrato · Gianluca</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 2.107,47</span>
+          <span class="portfolio-pnl neg">−5,4% PMC medio</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Asset</th><th>Qtà</th><th>PMC ($)</th><th>Prezzo ($)</th><th>Valore €</th><th>P&L %</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Rocket Lab USA<span class="ticker">RKLB · NASDAQ</span></td>
+            <td>10</td><td>43,48 $</td><td>68,37 $</td><td>596,05</td>
+            <td class="pos">+57,2%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:100%;background:#7c5cbf"></span></span></td>
+          </tr>
+          <tr>
+            <td>Alphabet (Google)<span class="ticker">GOOGL · NASDAQ</span></td>
+            <td>2</td><td>328,81 $</td><td>303,45 $</td><td>529,10</td>
+            <td class="neg">−7,7%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:89%;background:#7c5cbf"></span></span></td>
+          </tr>
+          <tr>
+            <td>Leonardo S.p.A.<span class="ticker">LDO · MIL</span></td>
+            <td>6</td><td>46,26 €</td><td>63,88 €</td><td>383,28</td>
+            <td class="pos">+38,1%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:61%;background:#7c5cbf"></span></span></td>
+          </tr>
+          <tr>
+            <td>Viking Therapeutics<span class="ticker">VKTX · NASDAQ</span></td>
+            <td>8</td><td>37,87 $</td><td>35,47 $</td><td>247,38</td>
+            <td class="neg">−6,3%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:42%;background:#7c5cbf"></span></span></td>
+          </tr>
+          <tr>
+            <td>Lottomatica Group<span class="ticker">LTMC · BIT</span></td>
+            <td>7</td><td>22,45 €</td><td>24,96 €</td><td>174,72</td>
+            <td class="pos">+11,2%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:29%;background:#7c5cbf"></span></span></td>
+          </tr>
+          <tr>
+            <td>Recursion Pharmaceuticals<span class="ticker">RXRX · NASDAQ</span></td>
+            <td>65</td><td>4,62 $</td><td>3,29 $</td><td>186,43</td>
+            <td class="neg">−28,8%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:31%;background:#c0392b"></span></span></td>
+          </tr>
+          <tr style="background:var(--surface2)">
+            <td style="color:var(--muted);font-size:12px">Liquidità Broker</td>
+            <td>—</td><td>—</td><td>—</td><td style="color:var(--muted)">9,83</td><td>—</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AGGRESSIVO -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name" style="color:#c2622a">Portafoglio Aggressivo</span>
+          <span class="portfolio-tag">BG Saxo · Amministrato · Gianluca</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 838,69</span>
+          <span class="portfolio-pnl neg">−10,2% PMC medio</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Asset</th><th>Qtà</th><th>PMC</th><th>Prezzo</th><th>Valore €</th><th>P&L %</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Man Group Plc<span class="ticker">EMG · LSE (GBp)</span></td>
+            <td>100</td><td>258,78 p</td><td>258,78 p</td><td>299,51</td>
+            <td style="color:var(--muted)">0,0%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:100%;background:#c2622a"></span></span></td>
+          </tr>
+          <tr>
+            <td>KKR & Co.<span class="ticker">KKR · NYSE</span></td>
+            <td>4</td><td>114,59 $</td><td>83,88 $</td><td>292,51</td>
+            <td class="neg">−26,8%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:98%;background:#c2622a"></span></span></td>
+          </tr>
+          <tr>
+            <td>Virtu Financial<span class="ticker">VIRT · NASDAQ</span></td>
+            <td>7</td><td>40,30 $</td><td>40,42 $</td><td>246,67</td>
+            <td class="pos">+0,3%</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:82%;background:#c2622a"></span></span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footnote">* Prezzi Man Group in pence (GBp), normalizzati in GBP per il calcolo del cambio EUR</div>
+    </div>
+
+    <!-- PREVIDENZA -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name" style="color:#1e7e52">Previdenza & Liquidità</span>
+          <span class="portfolio-tag">Fondo Pensione + Conti Bancari</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 79.942,00</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Strumento</th><th>Intestatario</th><th>Tipo</th><th>Saldo (€)</th><th>% Patrimonio</th><th>Note</th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Fondo Arca Crescita<span class="ticker">Fondo Pensione</span></td>
+            <td>Gianluca</td><td>Previdenziale</td><td>32.942,00</td><td>15,4%</td>
+            <td style="font-size:11px;color:var(--green)">+5.461 € rendimento</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:100%;background:#1e7e52"></span></span></td>
+          </tr>
+          <tr>
+            <td>Fondo Pensione<span class="ticker">Pensione Benedetta</span></td>
+            <td>Benedetta</td><td>Previdenziale</td><td>20.000,00</td><td>9,3%</td>
+            <td style="font-size:11px;color:var(--muted)">Stima arrotondata</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:61%;background:#1e7e52"></span></span></td>
+          </tr>
+          <tr>
+            <td>Conto BBVA 1,75%<span class="ticker">Deposito Bancario</span></td>
+            <td>Benedetta</td><td>Liquidità</td><td>15.000,00</td><td>7,0%</td>
+            <td>—</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:46%;background:#3a7fc1"></span></span></td>
+          </tr>
+          <tr>
+            <td>Conto BBVA 1,75%<span class="ticker">Deposito Bancario</span></td>
+            <td>Gianluca</td><td>Liquidità</td><td>12.000,00</td><td>5,6%</td>
+            <td>—</td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:36%;background:#3a7fc1"></span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ASSET REALI -->
+    <div class="portfolio-block">
+      <div class="portfolio-header">
+        <div>
+          <span class="portfolio-name" style="color:#8a6020">Asset Reali</span>
+          <span class="portfolio-tag">Immobiliare + Mobilità · Varese</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:6px">
+          <span class="portfolio-total">€ 64.500,00</span>
+          <span style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace">netto debito</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Asset</th><th>Valore Acquisto</th><th>Stato</th><th>Debito / Stima</th><th>Valore Netto</th><th></th><th>Peso</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Casa di Proprietà — Varese<span class="ticker">Mutuo fisso 2,93%</span></td>
+            <td>260.000,00</td>
+            <td style="color:var(--muted)">Mutuo attivo</td>
+            <td class="neg">−217.000,00</td>
+            <td>43.000,00</td><td></td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:67%;background:#8a6020"></span></span></td>
+          </tr>
+          <tr>
+            <td>Peugeot 308 (2022)<span class="ticker">Autovettura · Stima mercato</span></td>
+            <td>30.000,00</td>
+            <td style="color:var(--green)">Proprietà 100%</td>
+            <td>21.500,00</td>
+            <td>21.500,00</td><td></td>
+            <td><span class="bar-bg"><span class="bar-fill" style="width:33%;background:#8a6020"></span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>Report Patrimoniale — Gianluca & Benedetta — 13.03.2026</span>
+    <span>I valori sono stime di mercato. Non costituisce consulenza finanziaria.</span>
+  </footer>
+
+</div>
+
+<script>
+  Chart.defaults.color = '#7a7060';
+  Chart.defaults.borderColor = '#e0dbd4';
+  Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+  Chart.defaults.font.size = 11;
+
+  const GOLD   = '#9a7030';
+  const BLUE   = '#3a7fc1';
+  const PURPLE = '#7c5cbf';
+  const ORANGE = '#c2622a';
+  const GREEN  = '#1e7e52';
+  const MUTED  = '#7a7060';
+
+  const doughnutCfg = () => ({
+    type: 'doughnut',
+    options: {
+      cutout: '65%',
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          borderColor: '#e0dbd4',
+          borderWidth: 1,
+          padding: 12,
+          titleColor: '#9a7030',
+          bodyColor: '#1a1a1a',
+          callbacks: {
+            label: ctx => ` ${ctx.label}: € ${ctx.parsed.toLocaleString('it-IT', {maximumFractionDigits:0})}`
+          }
+        }
+      }
+    }
+  });
+
+  // MACRO
+  const macroData = {
+    labels: ['Asset Finanziari', 'Asset Reali Netti', 'Previdenza', 'Liquidità Bancaria'],
+    values: [69792.29, 64500, 52942, 27000],
+    colors: [GOLD, ORANGE, GREEN, BLUE]
+  };
+  const mc = doughnutCfg();
+  mc.data = {
+    labels: macroData.labels,
+    datasets: [{ data: macroData.values, backgroundColor: macroData.colors, borderColor: '#f4f2ee', borderWidth: 3, hoverBorderWidth: 4 }]
+  };
+  new Chart(document.getElementById('macroChart'), mc);
+  const macroLeg = document.getElementById('macroLegend');
+  macroData.labels.forEach((l, i) => {
+    macroLeg.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${macroData.colors[i]}"></div>${l}<span class="legend-val">&nbsp;€ ${macroData.values[i].toLocaleString('it-IT',{maximumFractionDigits:0})}</span></div>`;
+  });
+
+  // PORTFOLIO BREAKDOWN
+  const pfData = {
+    labels: ['Serio (Gianluca)', 'Benedetta', 'Fun (Gianluca)', 'Aggressivo (Gianluca)', 'Liquidità Broker'],
+    values: [37420.40, 29425.73, 2107.47, 838.69, 2380.34],
+    colors: [GOLD, BLUE, PURPLE, ORANGE, MUTED]
+  };
+  const pf = doughnutCfg();
+  pf.data = {
+    labels: pfData.labels,
+    datasets: [{ data: pfData.values, backgroundColor: pfData.colors, borderColor: '#f4f2ee', borderWidth: 3, hoverBorderWidth: 4 }]
+  };
+  new Chart(document.getElementById('portfolioChart'), pf);
+  const pfLeg = document.getElementById('portfolioLegend');
+  pfData.labels.forEach((l, i) => {
+    pfLeg.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${pfData.colors[i]}"></div>${l}<span class="legend-val">&nbsp;€ ${pfData.values[i].toLocaleString('it-IT',{maximumFractionDigits:0})}</span></div>`;
+  });
+</script>
+</body>
+</html>
