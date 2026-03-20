@@ -13,8 +13,8 @@
   --bg:#f3f1ec; --surface:#fff; --s2:#f8f6f2; --border:#e2dcd4;
   --gold:#8c621e; --gold-lt:#b07e2a; --green:#1a6e47; --red:#b83030;
   --text:#171410; --muted:#706860; --dim:#b8b0a4;
-  --blue:#2d6ea8; --purple:#6b4daa; --orange:#a84e1e; --amber:#c47a00;
-  --r:12px;
+  --blue:#2d6ea8; --purple:#6b4daa; --teal:#1a7a6e; --orange:#a84e1e;
+  --amber:#c47a00; --r:12px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%}
@@ -25,7 +25,7 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans
 .a3{animation:fadeUp .5s .15s ease both}.a4{animation:fadeUp .5s .22s ease both}
 .a5{animation:fadeUp .5s .3s ease both}
 
-/* ── HEADER ── */
+/* HEADER */
 header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;flex-direction:column;gap:20px}
 .h-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,6vw,2.8rem);line-height:1.08;letter-spacing:-.5px}
 .h-title em{color:var(--gold);font-style:italic}
@@ -37,7 +37,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .badge.warn{border-color:#f5dfa0;background:#fdf9ed}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ── FILTER ── */
+/* FILTER */
 .filter-bar{display:flex;gap:8px;padding:20px 0 0;align-items:center;flex-wrap:wrap}
 .filter-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-right:4px;flex-shrink:0}
 .filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:1px;padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent}
@@ -47,11 +47,11 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .fdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .filter-btn.active .fdot{background:rgba(255,255,255,.6)}
 
-/* ── SECTION ── */
+/* SECTION */
 .sec{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-family:'IBM Plex Mono',monospace;margin-bottom:14px;padding-top:38px;display:flex;align-items:center;gap:12px}
 .sec::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* ── KPI ── */
+/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 14px;position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);opacity:.4}
@@ -60,7 +60,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .kp{font-size:11px;color:var(--muted);margin-top:5px;font-family:'IBM Plex Mono',monospace}
 .kp b{color:var(--gold-lt)}
 
-/* ── CHARTS ── */
+/* CHARTS */
 .charts-row{display:grid;grid-template-columns:1fr;gap:12px}
 .cc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px}
 .ct{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:14px}
@@ -70,7 +70,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .ld{width:8px;height:8px;border-radius:3px;flex-shrink:0}
 .lv{color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px}
 
-/* ── ALLOC ── */
+/* ALLOC */
 .alloc-row{display:flex;flex-direction:column;gap:10px}
 .ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:0 12px;align-items:center}
 .an{font-size:14px;font-weight:700;grid-column:1}
@@ -81,7 +81,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .ap{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:5px;grid-column:1/3}
 .alloc-item.hidden{display:none}
 
-/* ── PORTFOLIO BLOCKS ── */
+/* PORTFOLIO BLOCKS */
 .table-section{display:flex;flex-direction:column;gap:14px}
 .pb{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
 .pb.hidden{display:none}
@@ -97,7 +97,7 @@ header{border-bottom:1px solid var(--border);padding:32px 0 26px;display:flex;fl
 .sh{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;padding:9px 16px;background:var(--s2);border-bottom:1px solid var(--border);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .sd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ── TABLE ── */
+/* TABLE */
 table{width:100%;border-collapse:collapse}
 thead th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-weight:400;padding:10px 16px;text-align:right;border-bottom:1px solid var(--border);background:var(--s2);white-space:nowrap}
 thead th:first-child{text-align:left}
@@ -113,7 +113,15 @@ tbody tr:hover td{background:#faf8f4}
 .pa{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 .fn{padding:10px 16px;font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--border);background:var(--s2);line-height:1.6}
 
-/* ── MOBILE TABLE → CARD ── */
+/* BENDING SPOONS CARD */
+.pe-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.pe-card.hidden{display:none}
+.pe-body{padding:18px 16px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px 20px;align-items:start}
+.pe-item .pe-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.pe-item .pe-val{font-family:'Playfair Display',serif;font-size:1.3rem;margin-top:4px}
+.pe-note{grid-column:1/-1;font-size:11.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--border);margin-top:4px;padding-top:12px;line-height:1.6}
+
+/* MOBILE TABLE → CARD */
 @media(max-width:640px){
   thead{display:none}
   table,tbody{display:block}
@@ -124,12 +132,13 @@ tbody tr:hover td{background:#faf8f4}
   tbody td::before{content:attr(data-label);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);flex-shrink:0;margin-right:8px;text-align:left}
   tbody td:first-child::before{display:none}
   td[data-label="PMC"],td[data-label="Nominale"],td[data-label="Tipo"],td[data-label="Valore Acquisto"]{display:none}
+  .pe-body{grid-template-columns:1fr 1fr}
 }
 
-/* ── FOOTER ── */
+/* FOOTER */
 footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-size:11px;color:var(--dim);font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;gap:5px;line-height:1.7}
 
-/* ── DESKTOP ── */
+/* DESKTOP */
 @media(min-width:641px){
   .wrap{padding:0 28px 96px}
   header{flex-direction:row;justify-content:space-between;align-items:flex-end;padding:52px 0 26px;gap:32px}
@@ -150,6 +159,7 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
   .fn{padding:10px 22px;font-size:11.5px}
   footer{flex-direction:row;justify-content:space-between;margin-top:64px;font-size:12px}
   .sec{padding-top:52px;margin-bottom:18px}
+  .pe-body{padding:20px 24px 22px}
 }
 </style>
 </head>
@@ -162,13 +172,13 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
     <div class="h-sub" id="h-sub">Gianluca &amp; Benedetta · Valuta base: EUR</div>
     <div class="badge warn">
       <span class="dot" style="background:var(--amber)"></span>
-      Aggiorna i prezzi in <strong>data.js</strong> prima di fare push
+      Aggiorna prezzi e quantità in <strong>data.js</strong>
     </div>
   </div>
   <div class="h-right">
     <div class="pl" id="pv-label">Patrimonio Netto Totale</div>
     <div class="pv" id="pv-value">—</div>
-    <div class="pm">Escluso Bending Spoons</div>
+    <div class="pm" id="pv-sub">Escluso Bending Spoons</div>
   </div>
 </header>
 
@@ -207,7 +217,7 @@ footer{margin-top:52px;border-top:1px solid var(--border);padding-top:20px;font-
 </footer>
 
 <script>
-/* ─── helpers ─── */
+/* ── helpers ── */
 const fmt    = (v,d=2) => v.toLocaleString('it-IT',{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmtK   = v => '€ ' + Math.round(v).toLocaleString('it-IT');
 const fmtPct = v => (v>=0?'+':'')+v.toFixed(1)+'%';
@@ -236,7 +246,7 @@ function nameCell(a) {
 }
 
 function priceDisplay(a) {
-  if(a.type === 'bond') return fmt(a.price,2); // show as %, e.g. 98,08
+  if(a.type==='bond') return fmt(a.price,2);
   const eur = toEUR(a.price, a.currency);
   if(a.currency==='EUR') return fmt(a.price)+' €';
   if(a.currency==='USD') return fmt(a.price,2)+' $ → '+fmt(eur)+' €';
@@ -245,11 +255,9 @@ function priceDisplay(a) {
 }
 
 function calc(a) {
-  // Bond prices are in % (e.g. 98.08 = 98.08% of face value)
-  // so effective price per unit = price/100
-  const factor   = a.type === 'bond' ? 1/100 : 1;
-  const priceEUR = toEUR(a.price * factor, a.currency);
-  const pmcEUR   = toEUR(a.pmc   * factor, a.currency);
+  const factor   = a.type==='bond' ? 1/100 : 1;
+  const priceEUR = toEUR(a.price*factor, a.currency);
+  const pmcEUR   = toEUR(a.pmc  *factor, a.currency);
   const value    = priceEUR * a.qty;
   const cost     = pmcEUR   * a.qty;
   return { value, cost, pct:((priceEUR-pmcEUR)/pmcEUR)*100, abs:value-cost };
@@ -258,10 +266,10 @@ function calc(a) {
 function renderTable(assets, headers) {
   const rows = assets.map(a => {
     const c = calc(a);
-    const pmcStr = a.type === 'bond'   ? fmt(a.pmc,2)
-                 : a.currency==='EUR'  ? fmt(a.pmc)+' €'
-                 : a.currency==='GBp'  ? fmt(a.pmc,0)+' p'
-                 : fmt(a.pmc,2)+' '+a.currency;
+    const pmcStr = a.type==='bond'       ? fmt(a.pmc,4)
+                 : a.currency==='EUR'    ? fmt(a.pmc,4)+' €'
+                 : a.currency==='GBp'    ? fmt(a.pmc,2)+' p'
+                 : fmt(a.pmc,4)+' '+a.currency;
     return `<tr>
       <td>${nameCell(a)}</td>
       <td data-label="Qtà">${a.qty.toLocaleString('it-IT')}</td>
@@ -274,75 +282,79 @@ function renderTable(assets, headers) {
   return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-/* ─── compute ─── */
+/* ── compute totals (everything from data.js, zero hardcoding) ── */
 function computeTotals() {
   const sv = arr => arr.reduce((s,a)=>s+calc(a).value,0);
   const sc = arr => arr.reduce((s,a)=>s+calc(a).cost, 0);
 
-  const sETF  = SERIO.filter(a=>a.type!=='bond');
-  const sBond = SERIO.filter(a=>a.type==='bond');
-  const bETF  = BENEDETTA.filter(a=>a.type!=='bond');
-  const bBond = BENEDETTA.filter(a=>a.type==='bond');
+  // Gianluca portfolios
+  const vSerio = sv(SERIO)       + LIQ_SERIO;
+  const vSpec  = sv(SPECULATIVO) + LIQ_SPECULATIVO;
+  const cSerio = sc(SERIO)       + LIQ_SERIO;
+  const cSpec  = sc(SPECULATIVO) + LIQ_SPECULATIVO;
 
-  const vSerio  = sv(sETF)+sv(sBond)+LIQ_SERIO;
-  const vBene   = sv(bETF)+sv(bBond)+LIQ_BENEDETTA;
-  const vSpec   = sv(SPECULATIVO)+LIQ_SPECULATIVO;
-  const vFin    = vSerio+vBene+vSpec;
+  // Benedetta portfolio
+  const vBene  = sv(BENEDETTA) + LIQ_BENEDETTA;
+  const cBene  = sc(BENEDETTA) + LIQ_BENEDETTA;
 
-  const cSerio  = sc(sETF)+sc(sBond)+LIQ_SERIO;
-  const cBene   = sc(bETF)+sc(bBond)+LIQ_BENEDETTA;
-  const cSpec   = sc(SPECULATIVO)+LIQ_SPECULATIVO;
+  const vFin = vSerio + vSpec + vBene;
 
-  const vPrev   = PREVIDENZA.reduce((s,x)=>s+x.value,0);
-  const vLiq    = CONTI.reduce((s,x)=>s+x.value,0);
-  const vReal   = REAL_ASSETS.reduce((s,x)=>s+(x.valore_stima+x.debito),0);
-  const vTot    = vFin+vPrev+vLiq+vReal;
-
-  // Per-owner sums — tutto da data.js, zero hardcoding
-  const ownerSum = (arr,owner) => arr.filter(x=>x.owner===owner).reduce((s,x)=>s+x.value,0);
+  // Previdenza, liquidità, real — fully dynamic from data.js arrays
+  const ownerSum = (arr, owner) => arr.filter(x=>x.owner===owner).reduce((s,x)=>s+x.value,0);
+  const vPrev  = PREVIDENZA.reduce((s,x)=>s+x.value,0);
+  const vLiq   = CONTI.reduce((s,x)=>s+x.value,0);
   const vPrevG = ownerSum(PREVIDENZA,'gianluca');
   const vPrevB = ownerSum(PREVIDENZA,'benedetta');
   const vLiqG  = ownerSum(CONTI,'gianluca');
   const vLiqB  = ownerSum(CONTI,'benedetta');
-  // Asset condivisi al 50%, owner specifico al 100%
+
+  const netOf  = x => x.valore_stima + x.debito;
   const shareFor = owner => REAL_ASSETS.reduce((s,x) => {
-    const netto = x.valore_stima+x.debito;
-    return s + netto*(x.owner==='entrambi'?0.5:x.owner===owner?1:0);
+    const n = netOf(x);
+    return s + n*(x.owner==='entrambi'?0.5:x.owner===owner?1:0);
   },0);
+  const vReal  = REAL_ASSETS.reduce((s,x)=>s+netOf(x),0);
   const vRealG = shareFor('gianluca');
   const vRealB = shareFor('benedetta');
 
+  // Private equity (optional inclusion)
+  const vPE = typeof PRIVATE_EQUITY !== 'undefined'
+    ? PRIVATE_EQUITY.filter(x=>x.includi_in_totale).reduce((s,x)=>s+x.valore_stimato,0)
+    : 0;
+
+  const vTot = vFin + vPrev + vLiq + vReal + vPE;
+
   return {
-    vSerio,vBene,vSpec,vFin,
-    cSerio,cBene,cSpec,
-    pctSerio:((vSerio-cSerio)/cSerio)*100, absSerio:vSerio-cSerio,
-    pctBene: ((vBene-cBene)/cBene)*100,   absBene: vBene-cBene,
-    pctSpec: ((vSpec-cSpec)/cSpec)*100,   absSpec: vSpec-cSpec,
-    vPrev,vLiq,vReal,vTot,
-    vPrevG,vPrevB,vLiqG,vLiqB,vRealG,vRealB,
-    vGianluca:  vSerio+vSpec+vPrevG+vLiqG+vRealG,
-    vBenedetta: vBene+vPrevB+vLiqB+vRealB,
+    vSerio, vSpec, vBene, vFin,
+    cSerio, cSpec, cBene,
+    pctSerio: ((vSerio-cSerio)/cSerio)*100, absSerio: vSerio-cSerio,
+    pctSpec:  ((vSpec-cSpec)/cSpec)*100,    absSpec:  vSpec-cSpec,
+    pctBene:  ((vBene-cBene)/cBene)*100,   absBene:  vBene-cBene,
+    vPrev, vLiq, vReal, vPrevG, vPrevB, vLiqG, vLiqB, vRealG, vRealB, vTot,
+    vGianluca:  vSerio + vSpec + vPrevG + vLiqG + vRealG,
+    vBenedetta: vBene  + vPrevB + vLiqB + vRealB,
   };
 }
 
-/* ─── alloc cards ─── */
+/* ── alloc cards ── */
 function renderAllocCards(t) {
+  const total = t.vFin;
   const cards = [
-    {id:'a-serio', owner:'gianluca',  name:'Portafoglio Serio',       sub:'Gianluca · Directa',       val:t.vSerio, color:'var(--gold)',   w:(t.vSerio/t.vFin*100)},
-    {id:'a-bene',  owner:'benedetta', name:'Portafoglio Benedetta',   sub:'Benedetta · Directa',      val:t.vBene,  color:'var(--blue)',   w:(t.vBene/t.vFin*100)},
-    {id:'a-spec',  owner:'gianluca',  name:'Portafoglio Speculativo', sub:'Gianluca · Directa + Saxo',val:t.vSpec,  color:'var(--purple)', w:(t.vSpec/t.vFin*100)},
+    {id:'a-serio', owner:'gianluca',  name:'Portafoglio Serio',        sub:'Gianluca · Directa',        val:t.vSerio, color:'var(--gold)',   w:t.vSerio/total*100},
+    {id:'a-spec',  owner:'gianluca',  name:'Portafoglio Speculativo',  sub:'Gianluca · Directa + Saxo', val:t.vSpec,  color:'var(--purple)', w:t.vSpec/total*100},
+    {id:'a-bene',  owner:'benedetta', name:'Portafoglio Benedetta',    sub:'Benedetta · Directa',       val:t.vBene,  color:'var(--blue)',   w:t.vBene/total*100},
   ];
   $('alloc-row').innerHTML = cards.map(c=>`
     <div class="ac alloc-item" data-owner="${c.owner}">
       <div class="an">${c.name}</div><div class="as">${c.sub}</div>
-      <div class="aa" id="${c.id}">${fmtK(c.val)}</div>
+      <div class="aa">${fmtK(c.val)}</div>
       <div class="abw"><div class="afb" id="bar-${c.id}" style="background:${c.color}"></div></div>
       <div class="ap">${c.w.toFixed(1)}% degli asset finanziari</div>
     </div>`).join('');
   setTimeout(()=>cards.forEach(c=>{ const b=$('bar-'+c.id); if(b) b.style.width=c.w.toFixed(1)+'%'; }),80);
 }
 
-/* ─── portfolio blocks ─── */
+/* ── portfolio blocks ── */
 function renderPortfolios(t) {
   const H  = ['Asset','Qtà','PMC','Prezzo','Valore €','P&L'];
   const HB = ['Titolo','Nominale','PMC','Prezzo','Valore €','P&L'];
@@ -352,12 +364,14 @@ function renderPortfolios(t) {
   const bETF  = BENEDETTA.filter(a=>a.type!=='bond');
   const bBond = BENEDETTA.filter(a=>a.type==='bond');
 
-  // previdenza + conti rows
+  // Previdenza + conti rows
   const prevRows = [...PREVIDENZA,...CONTI].map(x=>{
     const isPrev = PREVIDENZA.includes(x);
+    const logo = x.logo
+      ? `<div class="lw"><img src="https://logo.clearbit.com/${x.logo}" onerror="this.parentNode.innerHTML='🏦'"></div>`
+      : `<div class="lw">🏦</div>`;
     return `<tr data-row-owner="${x.owner}">
-      <td><div class="acw">${x.logo?`<div class="lw"><img src="https://logo.clearbit.com/${x.logo}" onerror="this.parentNode.innerHTML='🏦'"></div>`:'<div class="lw">🏦</div>'}
-        <div><span>${x.name}</span><span class="ticker">${x.note}</span></div></div></td>
+      <td><div class="acw">${logo}<div><span>${x.name}</span><span class="ticker">${x.note}</span></div></div></td>
       <td data-label="Intestatario" style="text-transform:capitalize">${x.owner}</td>
       <td data-label="Tipo">${isPrev?'Previdenziale':'Liquidità'}</td>
       <td data-label="Saldo (€)">${fmt(x.value)}</td>
@@ -365,8 +379,9 @@ function renderPortfolios(t) {
     </tr>`;
   }).join('');
 
+  // Real asset rows
   const realRows = REAL_ASSETS.map(x=>{
-    const netto = x.valore_stima+x.debito;
+    const netto = x.valore_stima + x.debito;
     return `<tr>
       <td>${nameCell(x)}</td>
       <td data-label="Valore Acquisto">${fmt(x.valore_acquisto,0)}</td>
@@ -376,66 +391,102 @@ function renderPortfolios(t) {
     </tr>`;
   }).join('');
 
+  // Bending Spoons card
+  let peHTML = '';
+  if(typeof PRIVATE_EQUITY !== 'undefined' && PRIVATE_EQUITY.length > 0) {
+    peHTML = PRIVATE_EQUITY.map(pe => {
+      const upside = pe.valore_stimato - pe.costo_carico;
+      const mult   = (pe.valore_stimato / pe.costo_carico).toFixed(1);
+      return `
+      <div class="pe-card" data-owner="${pe.owner}">
+        <div class="ph">
+          <div class="ph-left">
+            <span class="pn" style="color:var(--teal)">${pe.name}</span>
+            <span class="ptag">Private Equity · Pre-IPO · Benedetta</span>
+          </div>
+          <div class="ph-right">
+            <span class="ptot" style="color:var(--teal)">${fmtK(pe.valore_stimato)}</span>
+            <span class="ppnl pos">+${mult}x · ${fmtAbs(upside)}</span>
+          </div>
+        </div>
+        <div class="pe-body">
+          <div class="pe-item"><div class="pe-label">Costo di Carico</div><div class="pe-val">${fmtK(pe.costo_carico)}</div></div>
+          <div class="pe-item"><div class="pe-label">Valore Lordo Stimato</div><div class="pe-val pos">${fmtK(pe.valore_stimato)}</div></div>
+          <div class="pe-item"><div class="pe-label">Upside Lordo</div><div class="pe-val pos">${fmtK(upside)}</div></div>
+          <div class="pe-note">⚠ Valore stimato non realizzato. Escluso dai totali di patrimonio fino a liquidazione (modifica <code>includi_in_totale: true</code> in data.js per includerlo).</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
   $('table-section').innerHTML = `
-  <div class="pb" data-owner="gianluca">
-    <div class="ph">
-      <div class="ph-left"><span class="pn" style="color:var(--gold)">Portafoglio Serio</span><span class="ptag">Directa · Amministrato · Gianluca</span></div>
-      <div class="ph-right"><span class="ptot">${fmtK(t.vSerio)}</span><span class="ppnl ${cl(t.pctSerio)}">${fmtPct(t.pctSerio)} PMC · ${fmtAbs(t.absSerio)}</span></div>
-    </div>
-    <div class="sh"><span class="sd" style="background:var(--gold)"></span>Azioni &amp; ETF</div>
-    ${renderTable(sETF,H)}
-    <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
-    ${renderTable(sBond,HB)}
-    <div class="fn">Liquidità broker esclusa (€ ${fmt(LIQ_SERIO)}). PMC VWCE ponderato.</div>
-  </div>
 
-  <div class="pb" data-owner="benedetta">
-    <div class="ph">
-      <div class="ph-left"><span class="pn" style="color:var(--blue)">Portafoglio Benedetta</span><span class="ptag">Directa · Amministrato</span></div>
-      <div class="ph-right"><span class="ptot">${fmtK(t.vBene)}</span><span class="ppnl ${cl(t.pctBene)}">${fmtPct(t.pctBene)} PMC · ${fmtAbs(t.absBene)}</span></div>
+    <!-- SERIO -->
+    <div class="pb" data-owner="gianluca">
+      <div class="ph">
+        <div class="ph-left"><span class="pn" style="color:var(--gold)">Portafoglio Serio</span><span class="ptag">Directa · Amministrato · Gianluca</span></div>
+        <div class="ph-right"><span class="ptot">${fmtK(t.vSerio)}</span><span class="ppnl ${cl(t.pctSerio)}">${fmtPct(t.pctSerio)} PMC · ${fmtAbs(t.absSerio)}</span></div>
+      </div>
+      <div class="sh"><span class="sd" style="background:var(--gold)"></span>ETF</div>
+      ${renderTable(sETF,H)}
+      <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
+      ${renderTable(sBond,HB)}
+      <div class="fn">Liquidità broker: € ${fmt(LIQ_SERIO)} · PAC attivo 1.000 €/mese su VWCE (Borsa Italiana).</div>
     </div>
-    <div class="sh"><span class="sd" style="background:var(--blue)"></span>Azioni &amp; ETF</div>
-    ${renderTable(bETF,H)}
-    <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
-    ${renderTable(bBond,HB)}
-    <div class="fn">Liquidità broker esclusa (€ ${fmt(LIQ_BENEDETTA)}).</div>
-  </div>
 
-  <div class="pb" data-owner="gianluca">
-    <div class="ph">
-      <div class="ph-left"><span class="pn" style="color:var(--purple)">Portafoglio Speculativo</span><span class="ptag">Directa + BG Saxo · Gianluca</span></div>
-      <div class="ph-right"><span class="ptot">${fmtK(t.vSpec)}</span><span class="ppnl ${cl(t.pctSpec)}">${fmtPct(t.pctSpec)} PMC · ${fmtAbs(t.absSpec)}</span></div>
+    <!-- SPECULATIVO -->
+    <div class="pb" data-owner="gianluca">
+      <div class="ph">
+        <div class="ph-left"><span class="pn" style="color:var(--purple)">Portafoglio Speculativo</span><span class="ptag">Directa + BG Saxo · Gianluca</span></div>
+        <div class="ph-right"><span class="ptot">${fmtK(t.vSpec)}</span><span class="ppnl ${cl(t.pctSpec)}">${fmtPct(t.pctSpec)} PMC · ${fmtAbs(t.absSpec)}</span></div>
+      </div>
+      <div class="sh"><span class="sd" style="background:var(--purple)"></span>Azioni</div>
+      ${renderTable(SPECULATIVO,H)}
+      <div class="fn">EMG in pence (GBp), convertiti con FX da data.js. Liquidità broker: € ${fmt(LIQ_SPECULATIVO)}.</div>
     </div>
-    <div class="sh"><span class="sd" style="background:var(--purple)"></span>Azioni</div>
-    ${renderTable(SPECULATIVO,H)}
-    <div class="fn">EMG in pence convertiti con FX da data.js. Liquidità broker esclusa (€ ${fmt(LIQ_SPECULATIVO)}).</div>
-  </div>
 
-  <div class="pb" data-owner="both">
-    <div class="ph">
-      <div class="ph-left"><span class="pn" style="color:var(--green)">Previdenza &amp; Liquidità</span><span class="ptag">Fondi Pensione + Conti Bancari</span></div>
-      <div class="ph-right"><span class="ptot">${fmtK(t.vPrev+t.vLiq)}</span></div>
+    <!-- BENEDETTA -->
+    <div class="pb" data-owner="benedetta">
+      <div class="ph">
+        <div class="ph-left"><span class="pn" style="color:var(--blue)">Portafoglio Benedetta</span><span class="ptag">Directa · Amministrato</span></div>
+        <div class="ph-right"><span class="ptot">${fmtK(t.vBene)}</span><span class="ppnl ${cl(t.pctBene)}">${fmtPct(t.pctBene)} PMC · ${fmtAbs(t.absBene)}</span></div>
+      </div>
+      <div class="sh"><span class="sd" style="background:var(--blue)"></span>ETF</div>
+      ${renderTable(bETF,H)}
+      <div class="sh"><span class="sd" style="background:#6b8fc4"></span>Obbligazioni</div>
+      ${renderTable(bBond,HB)}
+      <div class="fn">Liquidità broker: € ${fmt(LIQ_BENEDETTA)} · PAC attivo 800-1.000 €/mese (80% VWCE / 20% IWQU).</div>
     </div>
-    <table><thead><tr><th>Strumento</th><th>Intestatario</th><th>Tipo</th><th>Saldo (€)</th><th>% Patrim.</th></tr></thead>
-    <tbody>${prevRows}</tbody></table>
-  </div>
 
-  <div class="pb" data-owner="both">
-    <div class="ph">
-      <div class="ph-left"><span class="pn" style="color:var(--gold)">Asset Reali</span><span class="ptag">Immobiliare + Mobilità · Condiviso</span></div>
-      <div class="ph-right"><span class="ptot">${fmtK(t.vReal)}</span><span class="ppnl neu">netto debito</span></div>
+    <!-- BENDING SPOONS -->
+    ${peHTML}
+
+    <!-- PREVIDENZA & LIQUIDITÀ -->
+    <div class="pb" data-owner="both">
+      <div class="ph">
+        <div class="ph-left"><span class="pn" style="color:var(--green)">Previdenza &amp; Liquidità</span><span class="ptag">Fondi Pensione + Conti Bancari</span></div>
+        <div class="ph-right"><span class="ptot">${fmtK(t.vPrev+t.vLiq)}</span></div>
+      </div>
+      <table><thead><tr><th>Strumento</th><th>Intestatario</th><th>Tipo</th><th>Saldo (€)</th><th>% Patrim.</th></tr></thead>
+      <tbody>${prevRows}</tbody></table>
     </div>
-    <table><thead><tr><th>Asset</th><th>Valore Acquisto</th><th>Stato</th><th>Debito / Stima</th><th>Valore Netto</th></tr></thead>
-    <tbody>${realRows}</tbody></table>
-  </div>`;
+
+    <!-- ASSET REALI -->
+    <div class="pb" data-owner="both">
+      <div class="ph">
+        <div class="ph-left"><span class="pn" style="color:var(--gold)">Asset Reali</span><span class="ptag">Immobiliare + Mobilità · Condiviso</span></div>
+        <div class="ph-right"><span class="ptot">${fmtK(t.vReal)}</span><span class="ppnl neu">netto debito</span></div>
+      </div>
+      <table><thead><tr><th>Asset</th><th>Valore Acquisto</th><th>Stato</th><th>Debito / Stima</th><th>Valore Netto</th></tr></thead>
+      <tbody>${realRows}</tbody></table>
+    </div>`;
 }
 
-/* ─── charts ─── */
+/* ── charts ── */
 Chart.defaults.color='#706860';
 Chart.defaults.borderColor='#e2dcd4';
 Chart.defaults.font.family="'IBM Plex Mono',monospace";
 Chart.defaults.font.size=11;
-
 const mkD=()=>({type:'doughnut',options:{cutout:'66%',responsive:true,maintainAspectRatio:false,animation:{duration:700,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'#e2dcd4',borderWidth:1,padding:12,titleColor:'#8c621e',bodyColor:'#171410',callbacks:{label:c=>` ${c.label}: ${fmtK(c.parsed)}`}}}}});
 const macroChart=new Chart($('macroChart'),mkD());
 const pfChart   =new Chart($('pfChart'),   mkD());
@@ -449,15 +500,19 @@ function updateCharts(t,view){
   $('macroLegend').innerHTML=mL.map((l,i)=>`<div class="li"><div class="ld" style="background:${mC[i]}"></div>${l}<span class="lv">&nbsp;${fmtK(mV[i])}</span></div>`).join('');
 
   const pL=[],pV=[],pC=[];
-  if(view!=='benedetta'){pL.push('Serio');     pV.push(t.vSerio);pC.push('#8c621e');}
-  if(view!=='gianluca') {pL.push('Benedetta'); pV.push(t.vBene); pC.push('#2d6ea8');}
-  if(view!=='benedetta'){pL.push('Speculativo');pV.push(t.vSpec);pC.push('#6b4daa');}
+  if(view!=='benedetta'){
+    pL.push('Serio');        pV.push(t.vSerio); pC.push('#8c621e');
+    pL.push('Speculativo');  pV.push(t.vSpec);  pC.push('#6b4daa');
+  }
+  if(view!=='gianluca'){
+    pL.push('Benedetta');    pV.push(t.vBene);  pC.push('#2d6ea8');
+  }
   pfChart.data={labels:pL,datasets:[{data:pV,backgroundColor:pC,borderColor:'#f3f1ec',borderWidth:3,hoverBorderWidth:4}]};
   pfChart.update();
   $('pfLegend').innerHTML=pL.map((l,i)=>`<div class="li"><div class="ld" style="background:${pC[i]}"></div>${l}<span class="lv">&nbsp;${fmtK(pV[i])}</span></div>`).join('');
 }
 
-/* ─── KPIs ─── */
+/* ── KPIs ── */
 function updateKPIs(t,view){
   let pat,fin,prev,liq,real;
   if(view==='famiglia'){
@@ -478,7 +533,7 @@ function updateKPIs(t,view){
   updateCharts(t,view);
 }
 
-/* ─── filter ─── */
+/* ── filter ── */
 let view='famiglia', totals=null;
 
 function setFilter(v,btn){
@@ -489,7 +544,7 @@ function setFilter(v,btn){
 }
 
 function applyFilter(v){
-  document.querySelectorAll('.pb').forEach(el=>{
+  document.querySelectorAll('.pb,.pe-card').forEach(el=>{
     const o=el.dataset.owner;
     el.classList.toggle('hidden',!(o==='both'||o===v||v==='famiglia'));
   });
@@ -501,7 +556,7 @@ function applyFilter(v){
   });
 }
 
-/* ─── init ─── */
+/* ── init ── */
 function init(){
   totals=computeTotals();
   const usd=fmt(1/FX.EURUSD,4), gbp=fmt(1/FX.EURGBP,4);
