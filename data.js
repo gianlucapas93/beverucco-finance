@@ -32,7 +32,7 @@ const SERIO = [
     name: "🌍 Vanguard FTSE All-World",
     ticker: "VWCE", isin: "IE00B3RBWM25",
     note: "Borsa Italiana (IT) — acquisti PAC attivi",
-    qty: 82, pmc: 145.0839, price: 147.26,
+    qty: 84, pmc: 145.0419, price: 147.26,
     currency: "EUR", logo: "vanguard.com", type: "etf"
   },
   {
